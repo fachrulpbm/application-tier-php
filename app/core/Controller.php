@@ -1,6 +1,5 @@
 <?php
 class Controller {
-    
     protected function jsonResponse(array $data, int $statusCode = 200): void {
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=utf-8');
@@ -11,33 +10,11 @@ class Controller {
     protected function getJsonInput(): ?array {
         $raw = file_get_contents('php://input');
         if (!$raw) return null;
-
         $input = json_decode($raw, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            $this->jsonResponse([
-                'success' => false,
-                'message' => 'Invalid JSON payload'
-            ], 400);
+            $this->jsonResponse(['success' => false, 'message' => 'Invalid JSON payload'], 400);
         }
         return $input;
-    }
-
-    protected function validateRequired(array $input, array $requiredFields): bool {
-        $missing = [];
-        foreach ($requiredFields as $field) {
-            if (!isset($input[$field]) || empty(trim($input[$field]))) {
-                $missing[] = $field;
-            }
-        }
-        
-        if (!empty($missing)) {
-            $this->jsonResponse([
-                'success' => false,
-                'message' => 'Field wajib: ' . implode(', ', $missing)
-            ], 400);
-            return false;
-        }
-        return true;
     }
 
     protected function success($data = null, string $message = 'Success', int $code = 200): void {
@@ -49,16 +26,6 @@ class Controller {
     }
 
     protected function error(string $message = 'Error', int $code = 400): void {
-        $this->jsonResponse([
-            'success' => false,
-            'message' => $message
-        ], $code);
-    }
-
-    protected function sanitize($data) {
-        if (is_array($data)) {
-            return array_map([$this, 'sanitize'], $data);
-        }
-        return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
+        $this->jsonResponse(['success' => false, 'message' => $message], $code);
     }
 }
