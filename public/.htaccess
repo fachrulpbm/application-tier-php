@@ -1,0 +1,31 @@
+# Enable RewriteEngine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    RewriteBase /application-tier-php/public/
+    
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ index.php [QSA,L]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+# If mod_rewrite is disabled, show error
+<IfModule !mod_rewrite.c>
+    # Fallback
+    <IfModule mod_alias.c>
+        RedirectMatch 307 ^/$ /index.php
+    </IfModule>
+</IfModule>
+
+# Security: Disable directory listing
+Options -Indexes
+
+# Security: Protect sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
