@@ -20,7 +20,7 @@ try {
     require_once '../app/core/Model.php';
     require_once '../app/core/Controller.php';
     require_once '../app/models/Mahasiswa.php';
-    require_once '../app/services/MahasiswaServices.php';
+    require_once '../app/services/MahasiswaService.php';
     require_once '../app/controllers/MahasiswaController.php';
     require_once '../app/core/App.php';
     
