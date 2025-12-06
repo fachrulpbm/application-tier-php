@@ -30,7 +30,7 @@ Studi kasus pengembangan aplikasi perangkat lunak desktop cross-platform dengan 
           <li>config</li>
         </ul>
     </ul>
-  <li><b>Data-Tier (DBMS MySQL)</b></li>
+  <li><b>Data-Tier (DBMS MySQL)</b> https://github.com/fachrulpbm/data-tier-mysql</li>
     <ul>
       <li><b>Data Source Layer</b></li>
         <ul>
